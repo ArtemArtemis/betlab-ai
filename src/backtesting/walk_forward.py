@@ -1,6 +1,7 @@
 from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
 from src.backtesting.backtester import Backtester
+from src.betting.value_detector import ValueDetector
 
 
 class WalkForwardBacktester:
@@ -12,6 +13,8 @@ class WalkForwardBacktester:
         self.predictor = EloPredictor()
 
         self.backtester = Backtester()
+
+        self.value_detector = ValueDetector()
 
 
     def run(self, df):
@@ -42,10 +45,46 @@ class WalkForwardBacktester:
             )
 
 
-            print(
-                f"{home} vs {away}",
-                prediction
+            home_value = self.value_detector.calculate_edge(
+                prediction["home_win"],
+                match["HomeOdds"]
             )
+
+
+            away_value = self.value_detector.calculate_edge(
+                prediction["away_win"],
+                match["AwayOdds"]
+            )
+
+
+            if self.value_detector.is_value_bet(
+                home_value["edge"]
+            ):
+
+                self.backtester.place_bet(
+                    probability=prediction["home_win"],
+                    odds=match["HomeOdds"],
+                    result=(
+                        "WIN"
+                        if match["FTHG"] > match["FTAG"]
+                        else "LOSS"
+                    )
+                )
+
+
+            elif self.value_detector.is_value_bet(
+                away_value["edge"]
+            ):
+
+                self.backtester.place_bet(
+                    probability=prediction["away_win"],
+                    odds=match["AwayOdds"],
+                    result=(
+                        "WIN"
+                        if match["FTAG"] > match["FTHG"]
+                        else "LOSS"
+                    )
+                )
 
 
             if match["FTHG"] > match["FTAG"]:
@@ -74,3 +113,6 @@ class WalkForwardBacktester:
                 result,
                 goal_difference
             )
+
+
+        self.backtester.report()

@@ -1,20 +1,30 @@
 import pandas as pd
 
+from src.features.football_features import FootballFeatures
 from src.backtesting.walk_forward import WalkForwardBacktester
 
 
-def main():
+# 1. Загружаем данные
 
-    df = pd.read_csv(
-        "data/raw/premier_league.csv"
-    )
-
-
-    backtester = WalkForwardBacktester()
+df = pd.read_csv(
+    "data/raw/premier_league.csv"
+)
 
 
-    backtester.run(df)
+# 2. Создаем признаки
+
+features = FootballFeatures(df)
+
+df = features.prepare()
 
 
-if __name__ == "__main__":
-    main()
+# 3. Сохраняем
+
+features.save(df)
+
+
+# 4. Запускаем Walk Forward Backtest
+
+backtester = WalkForwardBacktester()
+
+backtester.run(df)

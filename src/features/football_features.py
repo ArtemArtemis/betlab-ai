@@ -35,6 +35,11 @@ class FootballFeatures:
         )
 
 
+        self.df["HomeOdds"] = self.df["AvgH"]
+
+        self.df["AwayOdds"] = self.df["AvgA"]
+
+
         return self.df
 
 
