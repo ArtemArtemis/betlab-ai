@@ -1,0 +1,21 @@
+# Виртуальное окружение
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# VS Code
+.vscode/
+
+# Pytest
+.pytest_cache/
+
+# Логи
+*.log
+
+# Данные (оставим только структуру папок)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
