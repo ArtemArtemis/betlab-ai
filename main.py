@@ -2,6 +2,7 @@ import pandas as pd
 
 from src.models.elo_engine import EloEngine
 from src.models.elo_predictor import EloPredictor
+from src.betting.value_detector import ValueDetector
 
 
 def main():
@@ -35,6 +36,53 @@ def main():
         ratings[away]
     )
 
+
+    detector = ValueDetector()
+
+
+    odds = 1.50
+
+
+    value = detector.calculate_edge(
+        prediction["home_win"],
+        odds
+    )
+
+
+    print("\n===== VALUE ANALYSIS =====")
+
+
+    print(
+        "Model probability:",
+        value["model_probability"]
+    )
+
+
+    print(
+        "Market probability:",
+        value["market_probability"]
+    )
+
+
+    print(
+        "Edge:",
+        value["edge"]
+    )
+
+
+    if detector.is_value_bet(
+        value["edge"]
+    ):
+
+        print(
+            "SIGNAL: VALUE BET"
+        )
+
+    else:
+
+        print(
+            "SIGNAL: NO VALUE"
+        )
 
     print("\n===== MATCH PREDICTION =====")
 
