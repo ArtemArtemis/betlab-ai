@@ -1,19 +1,30 @@
-from src.collectors.football_data import FootballDataCollector
-from src.validators.data_validator import DataValidator
+import pandas as pd
+
+from src.features.football_features import FootballFeatures
 
 
 def main():
 
-    collector = FootballDataCollector()
+    df = pd.read_csv(
+        "data/raw/premier_league.csv"
+    )
 
-    df = collector.download_season("2425")
+    features = FootballFeatures(df)
 
-    collector.save_data(df)
+    prepared_df = features.prepare()
 
+    features.save(prepared_df)
 
-    validator = DataValidator(df)
-
-    validator.report()
+    print(
+        prepared_df[
+            [
+                "Date",
+                "HomeTeam",
+                "AwayTeam",
+                "Result"
+            ]
+        ].head()
+    )
 
 
 if __name__ == "__main__":
