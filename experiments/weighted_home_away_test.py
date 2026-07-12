@@ -9,6 +9,8 @@ from src.config.model_config import MODEL_CONFIG
 
 from src.features.football_features import FootballFeatures
 
+from src.config.experiment_config import EXPERIMENT_CONFIG
+
 import pandas as pd
 
 
@@ -71,7 +73,7 @@ experiment = Experiment(
             MODEL_CONFIG["max_edge"],
 
         "home_away_weight":
-            0.3
+            EXPERIMENT_CONFIG["home_away_weight"]
     }
 
 )

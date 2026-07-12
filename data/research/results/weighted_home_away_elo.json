@@ -10,14 +10,14 @@
         "form_weight": 80,
         "min_edge": 0.07,
         "max_edge": 0.12,
-        "home_away_weight": 0.3
+        "home_away_weight": 0.1
     },
     "results": {
-        "bets": 385,
-        "profit": -32.900000000000006,
-        "roi": -0.8545454545454547,
-        "profitable_seasons": 2,
+        "bets": 378,
+        "profit": -104.69999999999996,
+        "roi": -2.769841269841269,
+        "profitable_seasons": 1,
         "total_seasons": 3,
-        "research_score": 6.76
+        "research_score": 4.06
     }
 }
