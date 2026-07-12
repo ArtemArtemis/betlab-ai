@@ -29,7 +29,10 @@ class Leaderboard:
         ranking = sorted(
             results,
             key=lambda x:
-                x["results"]["roi"],
+                x["results"].get(
+                    "research_score",
+                    0
+                ),
             reverse=True
         )
 
@@ -78,6 +81,18 @@ class Leaderboard:
             print(
                 f"ROI: "
                 f"{result['roi']:+.2f}%"
+            )
+
+
+            print(
+                f"Research Score: "
+                f"{result.get('research_score',0):.2f}"
+            )           
+
+            print(
+                f"Stability: "
+                f"{result.get('profitable_seasons',0)}/"
+                f"{result.get('total_seasons',0)}"
             )
 
 

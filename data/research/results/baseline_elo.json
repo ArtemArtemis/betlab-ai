@@ -11,8 +11,11 @@
         "max_edge": 0.12
     },
     "results": {
-        "bets": 258,
-        "profit": 16.5,
-        "roi": 0.6395348837209303
+        "bets": 371,
+        "profit": 33.80000000000001,
+        "roi": 0.9110512129380056,
+        "profitable_seasons": 2,
+        "total_seasons": 3,
+        "research_score": 7.5
     }
 }

@@ -1,6 +1,7 @@
 from src.evaluation.metrics import BettingMetrics
 from src.research.report import ExperimentReport
 from src.research.storage import ExperimentStorage
+from src.research.scoring import ResearchScore
 
 
 
@@ -22,6 +23,8 @@ class ResearchRunner:
         self.metrics = BettingMetrics()
 
         self.storage = ExperimentStorage()
+
+        self.scorer = ResearchScore()
 
 
 
@@ -46,7 +49,9 @@ class ResearchRunner:
         total_metrics = {
             "bets":0,
             "profit":0,
-            "roi":0
+            "roi":0,
+            "profitable_seasons":0,
+            "total_seasons":len(seasons)
         }
 
 
@@ -74,6 +79,13 @@ class ResearchRunner:
             metrics = self.metrics.calculate(
                 bets
             )
+
+
+            if metrics["profit"] > 0:
+
+                total_metrics[
+                    "profitable_seasons"
+                ] += 1
 
 
             report.add_result(
@@ -108,6 +120,13 @@ class ResearchRunner:
                 *
 
                 100
+            )
+
+
+            total_metrics[
+                "research_score"
+            ] = self.scorer.calculate(
+                total_metrics
             )
 
 

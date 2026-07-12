@@ -22,6 +22,10 @@ from src.research.runner import (
 
 SEASONS = {
 
+    "2022/23":
+        "data/raw/"
+        "premier_league_2022_23.csv",
+
     "2023/24":
         "data/raw/"
         "premier_league_2023_24.csv",
