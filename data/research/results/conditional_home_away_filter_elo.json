@@ -1,0 +1,24 @@
+{
+    "experiment": "Conditional Home Away Filter Elo",
+    "model": "ConditionalHomeAwayWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "ConditionalHomeAwayFilter"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12,
+        "odds_threshold": 3.0,
+        "home_away_min_form": 0.5
+    },
+    "results": {
+        "bets": 260,
+        "profit": -310.4,
+        "roi": -11.938461538461539,
+        "profitable_seasons": 1,
+        "total_seasons": 3,
+        "research_score": -1.7
+    }
+}
