@@ -79,11 +79,13 @@ class BettingAnalyzer:
 
         ranges = [
 
-            ("5-10%", 0.05, 0.10),
+            ("5-7%", 0.05, 0.07),
 
-            ("10-20%", 0.10, 0.20),
+            ("7-10%", 0.07, 0.10),
 
-            ("20%+", 0.20, 1.0)
+            ("10-12%", 0.10, 0.12),
+
+            ("12%+", 0.12, 1.0)
 
         ]
 
@@ -127,6 +129,18 @@ class BettingAnalyzer:
             )
 
 
+            roi = (
+
+                profit
+
+                /
+
+                (len(bets) * 10)
+
+            )
+
+
+
             print(
                 f"""
 Edge {name}
@@ -137,7 +151,13 @@ Bets:
 Wins:
 {wins}
 
+Winrate:
+{wins / len(bets):.2%}
+
 Profit:
 {profit:.2f}
+
+ROI:
+{roi:.2%}
 """
             )
