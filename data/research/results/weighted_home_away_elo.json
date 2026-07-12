@@ -1,0 +1,23 @@
+{
+    "experiment": "Weighted Home Away Elo",
+    "model": "WeightedHomeAwayWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "HomeAwayAdjustment"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12,
+        "home_away_weight": 0.3
+    },
+    "results": {
+        "bets": 385,
+        "profit": -32.900000000000006,
+        "roi": -0.8545454545454547,
+        "profitable_seasons": 2,
+        "total_seasons": 3,
+        "research_score": 6.76
+    }
+}
