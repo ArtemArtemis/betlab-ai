@@ -1,5 +1,6 @@
 from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
+from src.models.team_form import TeamForm
 from src.backtesting.backtester import Backtester
 from src.betting.value_detector import ValueDetector
 
@@ -9,6 +10,8 @@ class WalkForwardBacktester:
     def __init__(self):
 
         self.elo = EloRating()
+
+        self.team_form = TeamForm()
 
         self.predictor = EloPredictor()
 
@@ -21,45 +24,38 @@ class WalkForwardBacktester:
 
         print("Running Walk Forward Backtest...")
 
-
         df = df.sort_values(
             by="Date"
         )
 
-
         for _, match in df.iterrows():
 
             home = match["HomeTeam"]
-
             away = match["AwayTeam"]
 
-
             home_rating = self.elo.get_rating(home)
-
             away_rating = self.elo.get_rating(away)
 
+            form_difference = self.team_form.get_difference(
+                home,
+                away
+            )
 
             prediction = self.predictor.predict(
                 home_rating,
-                away_rating
+                away_rating,
+                form_difference
             )
-
-
-            # Проверяем ставку на хозяев
 
             home_value = self.value_detector.calculate_edge(
                 prediction["home_win"],
                 match["HomeOdds"]
             )
 
-
-            # Проверяем ставку на гостей
-
             away_value = self.value_detector.calculate_edge(
                 prediction["away_win"],
                 match["AwayOdds"]
             )
-
 
             if self.value_detector.is_value_bet(
                 home_value["edge"]
@@ -78,7 +74,6 @@ class WalkForwardBacktester:
                     date=match["Date"]
                 )
 
-
             elif self.value_detector.is_value_bet(
                 away_value["edge"]
             ):
@@ -96,9 +91,6 @@ class WalkForwardBacktester:
                     date=match["Date"]
                 )
 
-
-            # Определяем фактический результат
-
             if match["FTHG"] > match["FTAG"]:
 
                 result = "H"
@@ -111,15 +103,11 @@ class WalkForwardBacktester:
 
                 result = "D"
 
-
             goal_difference = (
                 match["FTHG"]
                 -
                 match["FTAG"]
             )
-
-
-            # Обновляем Elo после матча
 
             self.elo.update(
                 home,
@@ -128,6 +116,11 @@ class WalkForwardBacktester:
                 goal_difference
             )
 
+            self.team_form.update(
+                home,
+                away,
+                result
+            )
 
         self.backtester.report()
 
