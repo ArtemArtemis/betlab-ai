@@ -1,0 +1,22 @@
+{
+    "experiment": "Home Away Form Elo",
+    "model": "HomeAwayWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "HomeForm",
+        "AwayForm"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 370,
+        "profit": -596.7,
+        "roi": -16.127027027027026,
+        "profitable_seasons": 0,
+        "total_seasons": 3,
+        "research_score": -4.36
+    }
+}
