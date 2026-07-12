@@ -1,0 +1,23 @@
+{
+    "experiment": "Home Away Filter Elo",
+    "model": "HomeAwayFilterWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "HomeAwayFilter"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12,
+        "home_away_min_form": 0.5
+    },
+    "results": {
+        "bets": 137,
+        "profit": -45.900000000000006,
+        "roi": -3.35036496350365,
+        "profitable_seasons": 1,
+        "total_seasons": 3,
+        "research_score": 1.36
+    }
+}
