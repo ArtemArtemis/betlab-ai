@@ -1,0 +1,21 @@
+{
+    "experiment": "Three Way Probability Elo",
+    "model": "ThreeWayProbabilityWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "ThreeWayProbability"
+    ],
+    "parameters": {
+        "home_advantage": 60,
+        "draw_probability": 0.25,
+        "min_edge": 0.07
+    },
+    "results": {
+        "bets": 329,
+        "profit": -204.09999999999997,
+        "roi": -6.203647416413373,
+        "profitable_seasons": 1,
+        "total_seasons": 3,
+        "research_score": 1.85
+    }
+}
