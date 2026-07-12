@@ -1,0 +1,18 @@
+{
+    "experiment": "Baseline Elo",
+    "model": "WalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 258,
+        "profit": 16.5,
+        "roi": 0.6395348837209303
+    }
+}

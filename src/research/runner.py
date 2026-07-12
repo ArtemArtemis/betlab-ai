@@ -1,5 +1,7 @@
 from src.evaluation.metrics import BettingMetrics
 from src.research.report import ExperimentReport
+from src.research.storage import ExperimentStorage
+
 
 
 class ResearchRunner:
@@ -18,6 +20,8 @@ class ResearchRunner:
         )
 
         self.metrics = BettingMetrics()
+
+        self.storage = ExperimentStorage()
 
 
 
@@ -39,6 +43,13 @@ class ResearchRunner:
         )
 
 
+        total_metrics = {
+            "bets":0,
+            "profit":0,
+            "roi":0
+        }
+
+
         for (
             season_name,
             dataframe
@@ -46,8 +57,7 @@ class ResearchRunner:
 
 
             print(
-                f"\nRunning season: "
-                f"{season_name}"
+                f"\nRunning season: {season_name}"
             )
 
 
@@ -70,6 +80,61 @@ class ResearchRunner:
                 season_name,
                 metrics
             )
+
+
+            total_metrics["bets"] += (
+                metrics["bets"]
+            )
+
+            total_metrics["profit"] += (
+                metrics["profit"]
+            )
+
+
+        if total_metrics["bets"] > 0:
+
+            total_metrics["roi"] = (
+
+                total_metrics["profit"]
+
+                /
+
+                (
+                    total_metrics["bets"]
+                    *
+                    10
+                )
+
+                *
+
+                100
+            )
+
+
+        result = {
+
+            "experiment":
+                self.experiment.name,
+
+            "model":
+                self.experiment.model,
+
+            "features":
+                self.experiment.features,
+
+            "parameters":
+                self.experiment.parameters,
+
+            "results":
+                total_metrics
+
+        }
+
+
+        self.storage.save(
+            self.experiment.name,
+            result
+        )
 
 
         report.summary()
