@@ -1,15 +1,16 @@
 from collections import defaultdict
 from collections import deque
 
+from src.config.model_config import MODEL_CONFIG
+
 
 class TeamForm:
 
-    def __init__(
-        self,
-        window=5
-    ):
+    def __init__(self):
 
-        self.window = window
+        self.window = MODEL_CONFIG[
+            "form_window"
+        ]
 
         self.history = defaultdict(
             lambda: deque(
@@ -26,17 +27,19 @@ class TeamForm:
         matches = self.history[team]
 
 
-        # Пока команда не сыграла ни одного матча,
-        # используем нейтральную форму
-
         if len(matches) == 0:
+
             return 0.5
 
 
-        earned_points = sum(matches)
+        earned_points = sum(
+            matches
+        )
 
         maximum_points = (
-            len(matches) * 3
+            len(matches)
+            *
+            3
         )
 
 
@@ -81,12 +84,10 @@ class TeamForm:
             home_points = 3
             away_points = 0
 
-
         elif result == "A":
 
             home_points = 0
             away_points = 3
-
 
         else:
 
@@ -94,10 +95,15 @@ class TeamForm:
             away_points = 1
 
 
-        self.history[home_team].append(
+        self.history[
+            home_team
+        ].append(
             home_points
         )
 
-        self.history[away_team].append(
+
+        self.history[
+            away_team
+        ].append(
             away_points
         )

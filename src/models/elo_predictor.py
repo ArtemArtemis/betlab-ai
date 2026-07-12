@@ -1,14 +1,17 @@
+from src.config.model_config import MODEL_CONFIG
+
+
 class EloPredictor:
 
-    def __init__(
-        self,
-        home_advantage=60,
-        form_weight=80
-    ):
+    def __init__(self):
 
-        self.home_advantage = home_advantage
+        self.home_advantage = MODEL_CONFIG[
+            "home_advantage"
+        ]
 
-        self.form_weight = form_weight
+        self.form_weight = MODEL_CONFIG[
+            "form_weight"
+        ]
 
 
     def predict(
@@ -58,6 +61,7 @@ class EloPredictor:
                 home_probability,
                 3
             ),
+
             "away_win": round(
                 away_probability,
                 3

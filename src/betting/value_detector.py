@@ -1,4 +1,18 @@
+from src.config.model_config import MODEL_CONFIG
+
+
 class ValueDetector:
+
+    def __init__(self):
+
+        self.min_edge = MODEL_CONFIG[
+            "min_edge"
+        ]
+
+        self.max_edge = MODEL_CONFIG[
+            "max_edge"
+        ]
+
 
     def calculate_implied_probability(
         self,
@@ -6,7 +20,9 @@ class ValueDetector:
     ):
 
         if odds is None or odds <= 1:
+
             return None
+
 
         return round(
             1 / odds,
@@ -25,6 +41,7 @@ class ValueDetector:
                 odds
             )
         )
+
 
         if market_probability is None:
 
@@ -51,16 +68,16 @@ class ValueDetector:
 
     def is_value_bet(
         self,
-        edge,
-        min_edge=0.07,
-        max_edge=0.12
+        edge
     ):
 
         if edge is None:
+
             return False
 
+
         return (
-            min_edge
+            self.min_edge
             <= edge
-            <= max_edge
+            <= self.max_edge
         )

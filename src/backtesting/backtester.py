@@ -1,14 +1,19 @@
+from src.config.model_config import MODEL_CONFIG
+
+
 class Backtester:
 
-    def __init__(
-        self,
-        starting_bankroll=1000,
-        stake=10
-    ):
+    def __init__(self):
 
-        self.starting_bankroll = starting_bankroll
-        self.bankroll = starting_bankroll
-        self.stake = stake
+        self.starting_bankroll = MODEL_CONFIG[
+            "starting_bankroll"
+        ]
+
+        self.bankroll = self.starting_bankroll
+
+        self.stake = MODEL_CONFIG[
+            "stake"
+        ]
 
         self.bets = []
 
@@ -23,7 +28,13 @@ class Backtester:
         date=None
     ):
 
-        market_probability = 1 / odds
+        if odds is None or odds <= 1:
+            return
+
+
+        market_probability = (
+            1 / odds
+        )
 
 
         edge = (
@@ -33,15 +44,9 @@ class Backtester:
         )
 
 
-        if edge < 0.05:
-            return
-
-
-        win = False
-
-
-        if result == "WIN":
-            win = True
+        win = (
+            result == "WIN"
+        )
 
 
         if win:
@@ -52,15 +57,14 @@ class Backtester:
                 (odds - 1)
             )
 
-            self.bankroll += profit
-
-
         else:
 
-            profit = -self.stake
+            profit = (
+                -self.stake
+            )
 
-            self.bankroll -= self.stake
 
+        self.bankroll += profit
 
 
         self.bets.append(
@@ -74,6 +78,7 @@ class Backtester:
                 "edge": edge,
                 "win": win,
                 "profit": profit,
+                "stake": self.stake,
                 "bankroll": self.bankroll
             }
         )
@@ -81,7 +86,9 @@ class Backtester:
 
     def report(self):
 
-        total_bets = len(self.bets)
+        total_bets = len(
+            self.bets
+        )
 
 
         if total_bets == 0:
@@ -98,6 +105,13 @@ class Backtester:
         )
 
 
+        losses = (
+            total_bets
+            -
+            wins
+        )
+
+
         profit = (
             self.bankroll
             -
@@ -105,14 +119,22 @@ class Backtester:
         )
 
 
-        roi = (
-            profit
-            /
-            (total_bets * self.stake)
+        total_staked = sum(
+            bet["stake"]
+            for bet in self.bets
         )
 
 
-        print("\n===== BACKTEST REPORT =====")
+        roi = (
+            profit
+            /
+            total_staked
+        )
+
+
+        print(
+            "\n===== BACKTEST REPORT ====="
+        )
 
         print(
             f"Bets: {total_bets}"
@@ -123,7 +145,7 @@ class Backtester:
         )
 
         print(
-            f"Losses: {total_bets - wins}"
+            f"Losses: {losses}"
         )
 
         print(
@@ -139,8 +161,13 @@ class Backtester:
         )
 
 
-        print("\nLast 5 bets:")
+        print(
+            "\nLast 5 bets:"
+        )
+
 
         for bet in self.bets[-5:]:
 
-            print(bet)
+            print(
+                bet
+            )
