@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 class Backtester:
 
     def __init__(
@@ -20,7 +17,10 @@ class Backtester:
         self,
         probability,
         odds,
-        result
+        result,
+        home_team=None,
+        away_team=None,
+        date=None
     ):
 
         market_probability = 1 / odds
@@ -33,8 +33,7 @@ class Backtester:
         )
 
 
-        # Ставим только если есть преимущество
-        if edge < 0.08:
+        if edge < 0.05:
             return
 
 
@@ -58,15 +57,23 @@ class Backtester:
 
         else:
 
+            profit = -self.stake
+
             self.bankroll -= self.stake
+
 
 
         self.bets.append(
             {
+                "date": date,
+                "home_team": home_team,
+                "away_team": away_team,
                 "odds": odds,
                 "probability": probability,
+                "market_probability": market_probability,
                 "edge": edge,
                 "win": win,
+                "profit": profit,
                 "bankroll": self.bankroll
             }
         )
@@ -78,14 +85,16 @@ class Backtester:
 
 
         if total_bets == 0:
+
             print("No bets")
+
             return
 
 
         wins = sum(
             1
-            for b in self.bets
-            if b["win"]
+            for bet in self.bets
+            if bet["win"]
         )
 
 
@@ -128,3 +137,10 @@ class Backtester:
         print(
             f"ROI: {roi:.2%}"
         )
+
+
+        print("\nLast 5 bets:")
+
+        for bet in self.bets[-5:]:
+
+            print(bet)

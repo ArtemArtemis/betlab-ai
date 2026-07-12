@@ -45,11 +45,15 @@ class WalkForwardBacktester:
             )
 
 
+            # Проверяем ставку на хозяев
+
             home_value = self.value_detector.calculate_edge(
                 prediction["home_win"],
                 match["HomeOdds"]
             )
 
+
+            # Проверяем ставку на гостей
 
             away_value = self.value_detector.calculate_edge(
                 prediction["away_win"],
@@ -68,7 +72,10 @@ class WalkForwardBacktester:
                         "WIN"
                         if match["FTHG"] > match["FTAG"]
                         else "LOSS"
-                    )
+                    ),
+                    home_team=home,
+                    away_team=away,
+                    date=match["Date"]
                 )
 
 
@@ -83,9 +90,14 @@ class WalkForwardBacktester:
                         "WIN"
                         if match["FTAG"] > match["FTHG"]
                         else "LOSS"
-                    )
+                    ),
+                    home_team=home,
+                    away_team=away,
+                    date=match["Date"]
                 )
 
+
+            # Определяем фактический результат
 
             if match["FTHG"] > match["FTAG"]:
 
@@ -106,6 +118,8 @@ class WalkForwardBacktester:
                 match["FTAG"]
             )
 
+
+            # Обновляем Elo после матча
 
             self.elo.update(
                 home,
