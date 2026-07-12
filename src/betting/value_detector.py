@@ -12,6 +12,7 @@ class ValueDetector:
         )
 
 
+
     def calculate_edge(
         self,
         model_probability,
@@ -39,10 +40,16 @@ class ValueDetector:
         }
 
 
+
     def is_value_bet(
         self,
         edge,
-        threshold=0.05
+        min_edge=0.05,
+        max_edge=0.12
     ):
 
-        return edge >= threshold
+        return (
+            edge >= min_edge
+            and
+            edge <= max_edge
+        )

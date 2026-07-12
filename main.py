@@ -2,6 +2,7 @@ import pandas as pd
 
 from src.features.football_features import FootballFeatures
 from src.backtesting.walk_forward import WalkForwardBacktester
+from src.analysis.betting_analysis import BettingAnalyzer
 
 
 # 1. Загружаем данные
@@ -27,4 +28,12 @@ features.save(df)
 
 backtester = WalkForwardBacktester()
 
-backtester.run(df)
+bets = backtester.run(df)
+
+analyzer = BettingAnalyzer(
+    bets
+)
+
+analyzer.summary()
+
+analyzer.analyze_edge()

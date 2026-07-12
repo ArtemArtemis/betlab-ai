@@ -130,3 +130,5 @@ class WalkForwardBacktester:
 
 
         self.backtester.report()
+
+        return self.backtester.bets
