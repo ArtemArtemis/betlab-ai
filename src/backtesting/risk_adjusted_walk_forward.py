@@ -1,6 +1,7 @@
 from src.backtesting.backtester import Backtester
 
 from src.betting.value_detector import ValueDetector
+from src.betting.market_score import MarketScore
 
 from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
@@ -25,14 +26,17 @@ class RiskAdjustedWalkForwardBacktester:
 
         self.value_detector = ValueDetector()
 
+        self.market_score = MarketScore()
+
 
         self.risk_stake = RiskAdjustedStake()
 
-
         self.backtester = Backtester()
+
 
         self.odds_min = None
         self.odds_max = None
+
 
 
     def check_odds(self, odds):
@@ -40,9 +44,23 @@ class RiskAdjustedWalkForwardBacktester:
         if self.odds_min is None:
             return True
 
-            return (
-        self.odds_min <= odds <= self.odds_max
-            )
+        return (
+            self.odds_min <= odds <= self.odds_max
+        )
+
+
+
+    def check_market(
+        self,
+        odds,
+        edge
+    ):
+
+        return self.market_score.is_valid(
+            odds,
+            edge
+        )
+
 
 
     def run(
@@ -122,6 +140,11 @@ class RiskAdjustedWalkForwardBacktester:
                 self.check_odds(
                     match["HomeOdds"]
                 )
+                and
+                self.check_market(
+                    match["HomeOdds"],
+                    home_value["edge"]
+                )
             ):
 
 
@@ -156,13 +179,18 @@ class RiskAdjustedWalkForwardBacktester:
 
 
 
-            elif ( 
+            elif (
                 self.value_detector.is_value_bet(
-                away_value["edge"]
+                    away_value["edge"]
                 )
                 and
                 self.check_odds(
                     match["AwayOdds"]
+                )
+                and
+                self.check_market(
+                    match["AwayOdds"],
+                    away_value["edge"]
                 )
             ):
 

@@ -27,6 +27,18 @@ MODEL_CONFIG = {
 
     "starting_bankroll": 1000,
 
-    "stake": 10
+    "stake": 10,
+
+    # Market Score Filter
+
+    # Market Score Filter
+
+    "market_score_min_odds": 3.0,
+
+    "market_score_max_odds": 6.0,
+
+    "market_score_min_edge": 0.09,
+
+    "market_score_max_edge": 0.10
 
 }
