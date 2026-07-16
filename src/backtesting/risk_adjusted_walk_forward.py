@@ -1,7 +1,7 @@
 from src.backtesting.backtester import Backtester
 
 from src.betting.value_detector import ValueDetector
-from src.betting.market_score import MarketScore
+from src.betting.market_score_v2 import MarketScoreV2
 
 from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
@@ -26,7 +26,7 @@ class RiskAdjustedWalkForwardBacktester:
 
         self.value_detector = ValueDetector()
 
-        self.market_score = MarketScore()
+        self.market_score = MarketScoreV2()
 
 
         self.risk_stake = RiskAdjustedStake()
@@ -178,6 +178,14 @@ class RiskAdjustedWalkForwardBacktester:
                 )
 
 
+                self.backtester.bets[-1]["market_score"] = (
+                    self.market_score.calculate_score(
+                        match["HomeOdds"],
+                        home_value["edge"]
+                    )
+                )
+
+
 
             elif (
                 self.value_detector.is_value_bet(
@@ -224,6 +232,12 @@ class RiskAdjustedWalkForwardBacktester:
 
                 )
 
+                self.backtester.bets[-1]["market_score"] = (
+                    self.market_score.calculate_score(
+                    match["AwayOdds"],
+                    away_value["edge"]
+                    )
+                )
 
 
             result = (
