@@ -31,6 +31,18 @@ class RiskAdjustedWalkForwardBacktester:
 
         self.backtester = Backtester()
 
+        self.odds_min = None
+        self.odds_max = None
+
+
+    def check_odds(self, odds):
+
+        if self.odds_min is None:
+            return True
+
+            return (
+        self.odds_min <= odds <= self.odds_max
+            )
 
 
     def run(
@@ -102,8 +114,14 @@ class RiskAdjustedWalkForwardBacktester:
 
 
 
-            if self.value_detector.is_value_bet(
-                home_value["edge"]
+            if (
+                self.value_detector.is_value_bet(
+                    home_value["edge"]
+                )
+                and
+                self.check_odds(
+                    match["HomeOdds"]
+                )
             ):
 
 
@@ -138,8 +156,14 @@ class RiskAdjustedWalkForwardBacktester:
 
 
 
-            elif self.value_detector.is_value_bet(
+            elif ( 
+                self.value_detector.is_value_bet(
                 away_value["edge"]
+                )
+                and
+                self.check_odds(
+                    match["AwayOdds"]
+                )
             ):
 
 
