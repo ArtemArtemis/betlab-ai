@@ -1,0 +1,21 @@
+{
+    "experiment": "Historical Probability Calibration",
+    "model": "HistoricalCalibrationWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "HistoricalCalibration"
+    ],
+    "parameters": {
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 173,
+        "profit": -24.299999999999983,
+        "roi": -1.4046242774566464,
+        "profitable_seasons": 1,
+        "total_seasons": 3,
+        "research_score": 2.69
+    }
+}
