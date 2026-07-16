@@ -1,0 +1,22 @@
+{
+    "experiment": "Dynamic Stake Management",
+    "model": "DynamicStakeWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "DynamicStake"
+    ],
+    "parameters": {
+        "stake_mode": "edge_based",
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 371,
+        "profit": 56.09999999999998,
+        "roi": 1.512129380053908,
+        "profitable_seasons": 2,
+        "total_seasons": 3,
+        "research_score": 7.8
+    }
+}
