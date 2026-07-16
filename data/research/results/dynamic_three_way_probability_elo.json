@@ -1,0 +1,23 @@
+{
+    "experiment": "Dynamic Three Way Probability Elo",
+    "model": "DynamicThreeWayWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "DynamicThreeWayProbability"
+    ],
+    "parameters": {
+        "home_advantage": 60,
+        "draw_equal_teams": 0.32,
+        "draw_medium": 0.25,
+        "draw_strong_favorite": 0.18,
+        "min_edge": 0.07
+    },
+    "results": {
+        "bets": 312,
+        "profit": -534.9,
+        "roi": -17.144230769230766,
+        "profitable_seasons": 0,
+        "total_seasons": 3,
+        "research_score": -5.45
+    }
+}
