@@ -1,0 +1,22 @@
+{
+    "experiment": "Feature Engineered Elo",
+    "model": "FeatureEngineeredWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "StrengthFeature"
+    ],
+    "parameters": {
+        "form_weight": 80,
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 255,
+        "profit": -491.8,
+        "roi": -19.28627450980392,
+        "profitable_seasons": 0,
+        "total_seasons": 3,
+        "research_score": -7.09
+    }
+}
