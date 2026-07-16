@@ -1,0 +1,22 @@
+{
+    "experiment": "Elo Form Blend",
+    "model": "EloFormBlendWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "FormBlend"
+    ],
+    "parameters": {
+        "form_blend_weight": 0.2,
+        "min_edge": 0.07,
+        "max_edge": 0.12
+    },
+    "results": {
+        "bets": 310,
+        "profit": -399.8,
+        "roi": -12.896774193548389,
+        "profitable_seasons": 0,
+        "total_seasons": 3,
+        "research_score": -3.35
+    }
+}
