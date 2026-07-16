@@ -1,0 +1,21 @@
+{
+    "experiment": "Risk Adjusted Dynamic Stake",
+    "model": "RiskAdjustedWalkForwardBacktester",
+    "features": [
+        "Elo",
+        "TeamForm",
+        "RiskAdjustedStake"
+    ],
+    "parameters": {
+        "base_strategy": "Dynamic Stake B",
+        "drawdown_control": true
+    },
+    "results": {
+        "bets": 371,
+        "profit": 89.27500000000003,
+        "roi": 2.406334231805931,
+        "profitable_seasons": 2,
+        "total_seasons": 3,
+        "research_score": 8.25
+    }
+}
