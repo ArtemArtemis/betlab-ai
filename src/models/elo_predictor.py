@@ -13,12 +13,18 @@ class EloPredictor:
             "form_weight"
         ]
 
+        self.strength_weight = MODEL_CONFIG.get(
+            "strength_weight",
+            0
+        )
+
 
     def predict(
         self,
         home_rating,
         away_rating,
-        form_difference=0
+        form_difference=0,
+        strength_difference=0
     ):
 
         adjusted_home_rating = (
@@ -30,6 +36,12 @@ class EloPredictor:
                 form_difference
                 *
                 self.form_weight
+            )
+            +
+            (
+                strength_difference
+                *
+                self.strength_weight
             )
         )
 
@@ -57,6 +69,7 @@ class EloPredictor:
 
 
         return {
+
             "home_win": round(
                 home_probability,
                 3
@@ -66,4 +79,5 @@ class EloPredictor:
                 away_probability,
                 3
             )
+
         }

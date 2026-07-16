@@ -7,6 +7,8 @@ from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
 from src.models.team_form import TeamForm
 
+from src.features.team_strength import TeamStrength
+
 from src.betting.risk_adjusted_stake import (
     RiskAdjustedStake
 )
@@ -21,6 +23,8 @@ class RiskAdjustedWalkForwardBacktester:
         self.elo = EloRating()
 
         self.team_form = TeamForm()
+
+        self.team_strength = TeamStrength()
 
         self.predictor = EloPredictor()
 
@@ -79,6 +83,7 @@ class RiskAdjustedWalkForwardBacktester:
         )
 
 
+
         for _, match in df.iterrows():
 
 
@@ -106,11 +111,25 @@ class RiskAdjustedWalkForwardBacktester:
             )
 
 
+            strength_difference = (
+                self.team_strength.get_strength_difference(
+                    home,
+                    away
+                )
+            )
+
+
 
             prediction = self.predictor.predict(
+
                 home_rating,
+
                 away_rating,
-                form_difference
+
+                form_difference,
+
+                strength_difference
+
             )
 
 
@@ -188,18 +207,24 @@ class RiskAdjustedWalkForwardBacktester:
 
 
             elif (
+
                 self.value_detector.is_value_bet(
                     away_value["edge"]
                 )
+
                 and
+
                 self.check_odds(
                     match["AwayOdds"]
                 )
+
                 and
+
                 self.check_market(
                     match["AwayOdds"],
                     away_value["edge"]
                 )
+
             ):
 
 
@@ -232,22 +257,26 @@ class RiskAdjustedWalkForwardBacktester:
 
                 )
 
+
                 self.backtester.bets[-1]["market_score"] = (
                     self.market_score.calculate_score(
-                    match["AwayOdds"],
-                    away_value["edge"]
+                        match["AwayOdds"],
+                        away_value["edge"]
                     )
                 )
+
 
 
             result = (
 
                 "H"
+
                 if match["FTHG"] > match["FTAG"]
 
                 else
 
                 "A"
+
                 if match["FTHG"] < match["FTAG"]
 
                 else
@@ -255,6 +284,7 @@ class RiskAdjustedWalkForwardBacktester:
                 "D"
 
             )
+
 
 
             self.elo.update(
@@ -267,6 +297,7 @@ class RiskAdjustedWalkForwardBacktester:
             )
 
 
+
             self.team_form.update(
 
                 home,
@@ -274,6 +305,19 @@ class RiskAdjustedWalkForwardBacktester:
                 result
 
             )
+
+
+            self.team_strength.update(
+
+                home,
+                away,
+
+                match["FTHG"],
+
+                match["FTAG"]
+
+            )
+
 
 
         self.backtester.report()

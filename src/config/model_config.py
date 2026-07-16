@@ -15,6 +15,8 @@ MODEL_CONFIG = {
 
     "form_weight": 80,
 
+    "strength_weight": 100,
+
 
     # Value betting filter
 
