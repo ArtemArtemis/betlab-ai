@@ -3,23 +3,26 @@ from src.betting.value_detector import ValueDetector
 from src.models.elo import EloRating
 from src.models.elo_predictor import EloPredictor
 from src.models.team_form import TeamForm
-from src.evaluation.platt_calibrator import PlattCalibrator
+from src.models.probability_calibrator import (
+    ProbabilityCalibrator
+)
 
 
 class CalibratedWalkForwardBacktester:
 
-    def __init__(
-        self,
-        calibrator
-    ):
+    def __init__(self):
+
+        self.calibrator = ProbabilityCalibrator(
+            model_weight=0.7,
+            market_weight=0.3
+        )
+
 
         self.elo = EloRating()
 
         self.team_form = TeamForm()
 
         self.predictor = EloPredictor()
-
-        self.calibrator = calibrator
 
         self.backtester = Backtester()
 
@@ -73,15 +76,17 @@ class CalibratedWalkForwardBacktester:
 
 
             calibrated_home_probability = (
-                self.calibrator.predict(
-                    prediction["home_win"]
+                self.calibrator.calibrate(
+                    prediction["home_win"],
+                    match["HomeOdds"]
                 )
             )
 
 
             calibrated_away_probability = (
-                self.calibrator.predict(
-                    prediction["away_win"]
+                self.calibrator.calibrate(
+                    prediction["away_win"],
+                    match["AwayOdds"]
                 )
             )
 
