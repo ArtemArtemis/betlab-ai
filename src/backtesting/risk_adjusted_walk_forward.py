@@ -13,6 +13,10 @@ from src.betting.risk_adjusted_stake import (
     RiskAdjustedStake
 )
 
+from src.betting.odds_regime_filter import (
+    OddsRegimeFilter
+)
+
 
 
 class RiskAdjustedWalkForwardBacktester:
@@ -37,6 +41,8 @@ class RiskAdjustedWalkForwardBacktester:
 
         self.backtester = Backtester()
 
+        self.odds_regime_filter = OddsRegimeFilter()
+
 
         self.odds_min = None
         self.odds_max = None
@@ -52,6 +58,16 @@ class RiskAdjustedWalkForwardBacktester:
             self.odds_min <= odds <= self.odds_max
         )
 
+        def check_odds_regime(
+            self,
+            odds,
+            edge
+        ):
+
+            return self.odds_regime_filter.is_valid(
+                odds,
+                edge
+            )
 
 
     def check_market(
